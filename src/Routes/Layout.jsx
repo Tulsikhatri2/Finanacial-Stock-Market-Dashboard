@@ -2,8 +2,15 @@ import React from "react";
 import Sidebar from "../Components/Navbar/Sidebar";
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+<<<<<<< HEAD
 import Dashboard from "../Pages/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute"
+=======
+import PrivateRoute from "./PrivateRoute";
+import Dashboard from "../Pages/Dashboard";
+import Portfolio from "../Pages/Portfolio";
+import News from "../Pages/News";
+>>>>>>> 5c07b1f223a546185b7fbebb61fc17bdbc3ccba3
 
 const Layout = () => {
   return (
@@ -23,6 +30,7 @@ const Layout = () => {
             path="/dashboard"
             element={<PrivateRoute Component={Dashboard} />}
           />
+<<<<<<< HEAD
           {/* <Route
             path="/user-details/:userId"
             element={<PrivateRoute Component={UserDetails} />}
@@ -63,6 +71,13 @@ const Layout = () => {
             path="/category"
             element={<PrivateRoute Component={CategoryAdd} />}
           /> */}
+=======
+          <Route
+            path="/portfolio"
+            element={<PrivateRoute Component={Portfolio} />}
+          />
+          <Route path="/news" element={<PrivateRoute Component={News} />} />
+>>>>>>> 5c07b1f223a546185b7fbebb61fc17bdbc3ccba3
         </Routes>
       </Box>
     </div>
