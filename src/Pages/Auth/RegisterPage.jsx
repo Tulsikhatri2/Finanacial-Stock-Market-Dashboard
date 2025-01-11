@@ -1,8 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import Loading from "../../Components/Loading/Loading";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -17,10 +14,7 @@ import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
-import { registerUsers } from "../../Redux/auth/authSlice";
 import Navbar from "../../Components/Navbar/Navbar";
-import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
@@ -38,12 +32,6 @@ const validationSchema = yup.object({
 });
 
 const RegisterPage = () => {
-  const navigate = useNavigate();
-  const { registerUser, isSuccess, isError, message, isLoading } = useSelector(
-    (state) => state.auth
-  );
-
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -76,24 +64,12 @@ const RegisterPage = () => {
       },
   });
 
-  useEffect(() => {
-    if (registerUser && isSuccess) {
-      // navigate("/email-verification");
-    } else if (isError && message) {
-      toast.error(message);
-    }
-  }, [registerUser, isSuccess, isError, message]);
-
   return (
     <>
       <Navbar />
       <Box className="register-page">
         <Box className="left-register"></Box>
         <Box className="right-register">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
               <Card
                 className="register-card"
                 sx={{ paddingBlock: "1.5rem", paddingInline: "1rem" }}
@@ -294,8 +270,6 @@ const RegisterPage = () => {
                   </Typography>
                 </Box>
               </Card>
-            </>
-          )}
         </Box>
       </Box>
     </>

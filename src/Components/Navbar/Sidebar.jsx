@@ -33,7 +33,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (user) {
-      navigate("/user-dashboard");
+      navigate("/dashboard");
     }
   }, [user]);
 
