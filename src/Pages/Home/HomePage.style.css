@@ -1,0 +1,20 @@
+/* HomePage CSS */
+.home-page{
+    width: 100%;
+    height: 90vh;
+    /* background: url("./assets/Img/loginBg.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat; */
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .home{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }

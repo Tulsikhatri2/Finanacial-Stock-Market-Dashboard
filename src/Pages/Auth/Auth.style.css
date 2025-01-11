@@ -1,0 +1,68 @@
+/* Auth */
+/* Login Page & Register Page & Reset Password Page*/
+.login-page,
+.register-page,
+.reset-password-page,
+.user-details-page,
+.email-verification-page {
+  width: 100%;
+  height: 90vh;
+  background: url("../../assets/Img/loginBg.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.left-login,
+.left-register,
+.left-reset-password,
+.left-user-details,
+.left-email-verification {
+  width: 50%;
+  height: 100%;
+}
+.right-login,
+.right-register,
+.right-reset-password,
+.right-user-detail,
+.right-email-verification {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card {
+  width: 50%;
+  height: 65%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+
+/* Register Card */
+.register-card {
+  width: 50%;
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+.link {
+  color: #2196f3;
+}
+.link:visited {
+  color: #bbdefb;
+}
+
+/* Reset Password Page */
+.reset-password-card {
+  width: 50%;
+  height: 50%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
+
+/* Verification Form */
+.verification-form {
+  width: 65%;
+  height: 60%;
+  background-color: rgba(255, 255, 255, 0.253) !important;
+}
