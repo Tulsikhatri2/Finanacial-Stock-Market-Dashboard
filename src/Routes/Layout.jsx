@@ -3,16 +3,9 @@ import Sidebar from "../Components/Navbar/Sidebar";
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
-import UserDetails from "../Pages/Users/UserDetails";
-import CategoryAdd from "../Pages/Categories/CategoryAdd";
-import CategoryDetails from "../Pages/Categories/CategoryDetails";
-import CategoryUpdate from "../Pages/Categories/CategoryUpdate";
-import CategoryList from "../Pages/Categories/CategoryList";
-import ProductList from "../Pages/Products/ProductList";
-import UserList from "../Pages/Users/UserList";
-import UserUpdate from "../Pages/Users/UserUpdate";
-import ProductDetails from "../Pages/Products/ProductDetails";
-import ProductAdd from "../Pages/Products/ProductAdd";
+import Dashboard from "../Pages/Dashboard";
+import Portfolio from "../Pages/Portfolio";
+import News from "../Pages/News";
 
 const Layout = () => {
   return (
@@ -29,49 +22,14 @@ const Layout = () => {
         <Routes>
           {/* User Routes */}
           <Route
-            path="/user-dashboard"
-            element={<PrivateRoute Component={UserList} />}
+            path="/dashboard"
+            element={<PrivateRoute Component={Dashboard} />}
           />
           <Route
-            path="/user-details/:userId"
-            element={<PrivateRoute Component={UserDetails} />}
+            path="/portfolio"
+            element={<PrivateRoute Component={Portfolio} />}
           />
-          <Route
-            path="/user-update/:userId"
-            element={<PrivateRoute Component={UserUpdate} />}
-          />
-
-          {/* Product Routes */}
-          <Route
-            path="/product-dashboard"
-            element={<PrivateRoute Component={ProductList} />}
-          />
-           <Route
-            path="/product-details/:_id"
-            element={<PrivateRoute Component={ProductDetails} />}
-          />
-          <Route
-            path="/product"
-            element={<PrivateRoute Component={ProductAdd} />}
-          />
-
-          {/* Category Routes */}
-          <Route
-            path="/category-dashboard"
-            element={<PrivateRoute Component={CategoryList} />}
-          />
-          <Route
-            path="/category-details/:_id"
-            element={<PrivateRoute Component={CategoryDetails} />}
-          />
-          <Route
-            path="/category-update/:_id"
-            element={<PrivateRoute Component={CategoryUpdate} />}
-          />
-          <Route
-            path="/category"
-            element={<PrivateRoute Component={CategoryAdd} />}
-          />
+          <Route path="/news" element={<PrivateRoute Component={News} />} />
         </Routes>
       </Box>
     </div>

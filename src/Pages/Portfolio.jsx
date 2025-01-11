@@ -9,9 +9,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import CategoryListData from "../../Components/Category/CategoryListData";
+import { useTheme } from "@emotion/react";
 
-const CategoryList = () => {
+const Portfolio = () => {
+  const theme = useTheme();
   const [isClosing, setIsClosing] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -52,9 +53,13 @@ const CategoryList = () => {
           <Typography
             variant="h4"
             align="right"
-            sx={{ width: "39.5%", color: "white", fontFamily: "Philosopher, sans-serif", }}
+            sx={{
+              width: "39.5%",
+              color: "white",
+              fontFamily: "Philosopher, sans-serif",
+            }}
           >
-            Category Dashboard
+            Portfolio
           </Typography>
 
           <IconButton
@@ -119,7 +124,7 @@ const CategoryList = () => {
           }}
         >
           <Box sx={{ width: "100%", height: "100%", paddingInline: "3rem" }}>
-            <CategoryListData />
+            {/* <CategoryListData /> */}
           </Box>
         </Box>
       </Box>
@@ -127,4 +132,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default Portfolio;
