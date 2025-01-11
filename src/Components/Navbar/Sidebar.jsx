@@ -11,7 +11,6 @@ import {
 import React, { useEffect } from "react";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import userDefaultImage from "../../assets/Img/userDefaultImage.png";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
@@ -22,12 +21,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
   // const { user } = useSelector((state) => state.auth);
   // const token = localStorage.getItem("token")
-  const [user] = useAuthState(auth)
+  const [user] = useAuthState(auth);
 
   const logout = () => {
     localStorage.clear();
     auth.signOut();
-    navigate("/login");
+    navigate("/");
     window.location.reload();
   };
 
@@ -106,10 +105,8 @@ const Sidebar = () => {
                 fontFamily: "Philosopher, sans-serif",
               }}
             >
-              {user?.name && (
-                user?.name
-              )}
-              
+              {user?.name && user?.name}
+
               <p variant="h6" sx={{ color: "#B1BDC7" }}>
                 <span style={{ fontWeight: "550" }}></span> {user?.email}
               </p>
@@ -117,11 +114,17 @@ const Sidebar = () => {
           </Box>
         </List>
         <List>
-          <ListItem onClick={() => navigate("/product-dashboard")}>
+          <ListItem onClick={() => navigate("/dashboard")}>
             <ListItemText
               primary={
-                <Typography sx={{ color: "white", fontSize: "1.3rem", fontFamily: "Philosopher, sans-serif", }}>
-                  Products
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: "1.3rem",
+                    fontFamily: "Philosopher, sans-serif",
+                  }}
+                >
+                  Dashboard
                 </Typography>
               }
               sx={{ color: "white", fontSize: "3rem" }}
@@ -131,11 +134,17 @@ const Sidebar = () => {
             </Button>
           </ListItem>
 
-          <ListItem onClick={() => navigate("/user-dashboard")}>
+          <ListItem onClick={() => navigate("/portfolio")}>
             <ListItemText
               primary={
-                <Typography sx={{ color: "white", fontSize: "1.3rem",fontFamily: "Philosopher, sans-serif", }}>
-                  Users
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: "1.3rem",
+                    fontFamily: "Philosopher, sans-serif",
+                  }}
+                >
+                  Portfolio
                 </Typography>
               }
               sx={{ color: "white", fontSize: "5rem" }}
@@ -145,11 +154,17 @@ const Sidebar = () => {
             </Button>
           </ListItem>
 
-          <ListItem onClick={() => navigate("/category-dashboard")}>
+          <ListItem onClick={() => navigate("/news")}>
             <ListItemText
               primary={
-                <Typography sx={{ color: "white", fontSize: "1.3rem", fontFamily: "Philosopher, sans-serif", }}>
-                  Categories
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: "1.3rem",
+                    fontFamily: "Philosopher, sans-serif",
+                  }}
+                >
+                  News
                 </Typography>
               }
               sx={{ color: "white", fontSize: "5rem" }}

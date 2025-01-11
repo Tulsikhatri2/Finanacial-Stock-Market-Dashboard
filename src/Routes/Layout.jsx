@@ -2,7 +2,6 @@ import React from "react";
 import Sidebar from "../Components/Navbar/Sidebar";
 import { Box } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../Pages/Dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute"
 
 const Layout = () => {
@@ -19,10 +18,10 @@ const Layout = () => {
       <Box sx={{ width: "100%", height: "100%" }}>
         <Routes>
           {/* User Routes */}
-          <Route
+          {/* <Route
             path="/dashboard"
             element={<PrivateRoute Component={Dashboard} />}
-          />
+          /> */}
           {/* <Route
             path="/user-details/:userId"
             element={<PrivateRoute Component={UserDetails} />}
