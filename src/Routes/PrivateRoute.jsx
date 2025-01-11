@@ -1,21 +1,24 @@
 import React, { useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
 
 const PrivateRoute = ({Component}) => {
-    const {userToken}= useSelector(state=>state.auth);
     const navigate = useNavigate()
+    const [user] = useAuthState(auth)
+    // const token = localStorage.getItem("token")
 
-    useEffect(()=>{
-      if(!userToken){
-        navigate("/login")
-      }
-    },[userToken])
+    // useEffect(()=>{
+    //   if(!token){
+    //     navigate("/login")
+    //   }
+    // },[token])
 
   return (
     <>
     {
-        userToken ? <Component/> : <Navigate to="/login" />
+        user ? <Component/> : <Navigate to="/login" />
     }
     </>
   )

@@ -21,6 +21,8 @@ import { useDispatch } from "react-redux";
 import { registerUsers } from "../../Redux/auth/authSlice";
 import Navbar from "../../Components/Navbar/Navbar";
 import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase";
 
 // Use Yup Validation On Register Form
 const validationSchema = yup.object({
@@ -64,14 +66,19 @@ const RegisterPage = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      dispatch(registerUsers(values));
-    },
+    onSubmit: async(values) => {
+      try {
+        await createUserWithEmailAndPassword(auth, values.email, values.password);
+        alert("Signup successful!");
+      } catch (err) {
+        alert(err.message);
+      }
+      },
   });
 
   useEffect(() => {
     if (registerUser && isSuccess) {
-      navigate("/email-verification");
+      // navigate("/email-verification");
     } else if (isError && message) {
       toast.error(message);
     }

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import Loading from "../../Components/Loading/Loading";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -15,15 +14,17 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { googleLogin, loginUser } from "../../Redux/auth/authSlice";
+import { googleLogin } from "../../Redux/auth/authSlice";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Navbar from "../../Components/Navbar/Navbar";
 
 import ForgotPassword from "../../Components/Login/ForgotPassword";
 import { GoogleLogin } from "@react-oauth/google";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase";
+import { GoogleAuthProvider } from "firebase/auth/web-extension";
 
-// Use Yup Validation On Login Form
 const validationSchema = yup.object({
   email: yup
     .string("Enter Your Email")
@@ -36,7 +37,7 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
-  const { isLoading, userToken, user } = useSelector((state) => state.auth);
+  const { isLoading } = useSelector((state) => state.auth);
 
   const [showPassword, setShowPassword] = React.useState(false);
 
@@ -61,17 +62,24 @@ const LoginPage = () => {
       password: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      dispatch(loginUser(values));
+    onSubmit: async (values) => {
+      try {
+        await signInWithEmailAndPassword(auth, values.email, values.password);
+        // localStorage.setItem("token", "eyJhbGciiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfb…jZSpJ9.hDRKzbr4GIoPQgbqXr7BRcGCov1_jN0_PyyG4a99HohE")
+      } catch (err) {
+        alert(err.message);
+      }
     },
   });
 
   // Google Login
   const handleSuccess = async (response) => {
-    const userToken = {
-      idToken: response.credential,
-    };
-    dispatch(googleLogin(userToken));
+    const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider);
+    // const userToken = {
+    //   idToken: response.credential,
+    // };
+    // dispatch(googleLogin(userToken));
   };
 
   const handleError = async () => {
@@ -99,7 +107,7 @@ const LoginPage = () => {
             <>
               <Card
                 className="login-card"
-                sx={{borderRadius:"0rem", paddingBlock: "1.5rem", paddingInline: "1rem" }}
+                sx={{ borderRadius: "0rem", paddingBlock: "1.5rem", paddingInline: "1rem" }}
               >
                 <form
                   style={{ width: "100%", height: "85%" }}
@@ -117,11 +125,12 @@ const LoginPage = () => {
                     }}
                   >
                     <p
-                      style={{ letterSpacing: 3,
-                        color:"white",
-                        fontSize:"2.5vh",
-                        fontWeight:"500"
-                       }}
+                      style={{
+                        letterSpacing: 3,
+                        color: "white",
+                        fontSize: "2.5vh",
+                        fontWeight: "500"
+                      }}
                     >
                       Sign In
                     </p>
@@ -209,6 +218,7 @@ const LoginPage = () => {
                             fontSize: "1.3rem",
                           },
                         }}
+                        type="password"
                         name="password"
                         value={formik.values.password}
                         onChange={formik.handleChange}
@@ -247,7 +257,7 @@ const LoginPage = () => {
                           backgroundColor: "#0c0a0a",
                           color: "white",
                         },
-                        borderRadius:"0rem"
+                        borderRadius: "0rem"
                       }}
                       type="submit"
                     >

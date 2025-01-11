@@ -13,24 +13,29 @@ import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import userDefaultImage from "../../assets/Img/userDefaultImage.png";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase";
 
 const drawerWidth = "30rem";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  const { user, userToken } = useSelector((state) => state.auth);
+  // const { user } = useSelector((state) => state.auth);
+  // const token = localStorage.getItem("token")
+  const [user] = useAuthState(auth)
 
   const logout = () => {
     localStorage.clear();
+    auth.signOut();
     navigate("/login");
     window.location.reload();
   };
 
   useEffect(() => {
-    if (userToken) {
+    if (user) {
       navigate("/user-dashboard");
     }
-  }, [userToken]);
+  }, [user]);
 
   const drawer = (
     <Box
@@ -101,9 +106,12 @@ const Sidebar = () => {
                 fontFamily: "Philosopher, sans-serif",
               }}
             >
-              {user.name}
+              {user?.name && (
+                user?.name
+              )}
+              
               <p variant="h6" sx={{ color: "#B1BDC7" }}>
-                <span style={{ fontWeight: "550" }}></span> {user.email}
+                <span style={{ fontWeight: "550" }}></span> {user?.email}
               </p>
             </Typography>
           </Box>
