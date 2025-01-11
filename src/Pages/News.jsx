@@ -1,6 +1,11 @@
 import {
   AppBar,
   Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
   CssBaseline,
   Drawer,
   IconButton,
@@ -9,9 +14,10 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import UserListData from "../../Components/User/UserListData";
+import { useTheme } from "@emotion/react";
 
-const UserList = () => {
+const News = () => {
+  const theme = useTheme();
   const [isClosing, setIsClosing] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -32,9 +38,9 @@ const UserList = () => {
     <Box
       sx={{
         display: "flex",
+        backgroundColor: "#0c0a0a",
         width: "100%",
         height: "100vh",
-        backgroundColor: "#0c0a0a",
       }}
     >
       <CssBaseline />
@@ -43,7 +49,7 @@ const UserList = () => {
         sx={{
           ml: {
             width: "100%",
-            height: "8rem",
+            height: "6rem",
             backgroundColor: "#0c0a0a",
           },
         }}
@@ -52,10 +58,15 @@ const UserList = () => {
           <Typography
             variant="h4"
             align="right"
-            sx={{ width: "35.5%", color: "white", fontFamily: "Philosopher, sans-serif", }}
+            sx={{
+              width: "39.5%",
+              color: "white",
+              fontFamily: "Philosopher, sans-serif",
+            }}
           >
-            User Dashboard
+            News
           </Typography>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -113,13 +124,12 @@ const UserList = () => {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            backgroundColor: "#0c0a0a",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
           <Box sx={{ width: "100%", height: "100%", paddingInline: "3rem" }}>
-            <UserListData/>
+            {/* <CategoryListData /> */}
           </Box>
         </Box>
       </Box>
@@ -127,4 +137,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default News;

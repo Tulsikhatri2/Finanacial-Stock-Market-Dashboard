@@ -1,18 +1,19 @@
 import {
   AppBar,
   Box,
+
   CssBaseline,
   Drawer,
   IconButton,
   Toolbar,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
-import ProductListData from "../../Components/Product/ProductListData";
+import { useTheme } from "@emotion/react";
 
-const ProductList = () => {
-
+const Dashboard = () => {
+  const theme = useTheme();
   const [isClosing, setIsClosing] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -28,7 +29,6 @@ const ProductList = () => {
   const handleDrawerTransitionEnd = () => {
     setIsClosing(false);
   };
-
 
   return (
     <Box
@@ -55,13 +55,14 @@ const ProductList = () => {
             variant="h4"
             align="right"
             sx={{
-              width: "38%",
+              width: "39.5%",
               color: "white",
               fontFamily: "Philosopher, sans-serif",
             }}
           >
-            Product Dashboard
+            Dashboard
           </Typography>
+
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -124,7 +125,7 @@ const ProductList = () => {
           }}
         >
           <Box sx={{ width: "100%", height: "100%", paddingInline: "3rem" }}>
-            <ProductListData />
+            {/* <CategoryListData /> */}
           </Box>
         </Box>
       </Box>
@@ -132,4 +133,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default Dashboard;
