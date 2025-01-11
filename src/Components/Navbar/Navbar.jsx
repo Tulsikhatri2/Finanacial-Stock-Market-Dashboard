@@ -2,24 +2,16 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import {
   IconButton,
-  Drawer,
   List,
   ListItem,
   ListItemText,
-  FormControlLabel,
-  Switch,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useMediaQuery, useTheme } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const { user } = useSelector((state) => state.auth);
   const [drawerOpen, setDrawerOpen] = React.useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import { useSelector } from "react-redux";
-import Loading from "../../Components/Loading/Loading";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -13,13 +11,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { googleLogin } from "../../Redux/auth/authSlice";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Navbar from "../../Components/Navbar/Navbar";
-
-import ForgotPassword from "../../Components/Login/ForgotPassword";
 import { GoogleLogin } from "@react-oauth/google";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase";
@@ -37,8 +31,6 @@ const validationSchema = yup.object({
 });
 
 const LoginPage = () => {
-  const { isLoading } = useSelector((state) => state.auth);
-
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -46,8 +38,6 @@ const LoginPage = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-
-  const dispatch = useDispatch();
 
   const CustomLabel = styled("label")(({ theme }) => ({
     fontSize: "1.5rem",
@@ -65,7 +55,6 @@ const LoginPage = () => {
     onSubmit: async (values) => {
       try {
         await signInWithEmailAndPassword(auth, values.email, values.password);
-        // localStorage.setItem("token", "eyJhbGciiOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfb…jZSpJ9.hDRKzbr4GIoPQgbqXr7BRcGCov1_jN0_PyyG4a99HohE")
       } catch (err) {
         alert(err.message);
       }
@@ -75,11 +64,7 @@ const LoginPage = () => {
   // Google Login
   const handleSuccess = async (response) => {
     const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider);
-    // const userToken = {
-    //   idToken: response.credential,
-    // };
-    // dispatch(googleLogin(userToken));
+    signInWithPopup(auth, provider);
   };
 
   const handleError = async () => {
@@ -101,10 +86,6 @@ const LoginPage = () => {
       <Box className="login-page">
         <Box className="left-login"></Box>
         <Box className="right-login">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <>
               <Card
                 className="login-card"
                 sx={{ borderRadius: "0rem", paddingBlock: "1.5rem", paddingInline: "1rem" }}
@@ -263,14 +244,6 @@ const LoginPage = () => {
                     >
                       Login
                     </Button>
-                    <GoogleLogin
-                      type="submit"
-                      onSuccess={handleSuccess}
-                      onError={handleError}
-                      shape="rectangular"
-                      style={{ width: "100%" }}
-                      size="large"
-                    />
                   </CardActions>
                 </form>
 
@@ -294,12 +267,9 @@ const LoginPage = () => {
                     <Link to={""} className="link" onClick={handleClickOpen}>
                       Forgot Password
                     </Link>
-                    <ForgotPassword open={open} handleClose={handleClose} />
                   </Typography>
                 </Box>
               </Card>
-            </>
-          )}
         </Box>
       </Box>
     </>
