@@ -2,7 +2,6 @@
 
 /* Import CSS File */
 @import "./Pages/Auth/Auth.style.css";
-@import "./System/System.style.css";
 @import "./Components/Loading/Loading.style.css";
 * {
   margin: 0rem;

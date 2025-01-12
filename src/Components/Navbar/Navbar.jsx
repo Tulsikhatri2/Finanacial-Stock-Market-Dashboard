@@ -81,7 +81,7 @@ const Navbar = () => {
             onClick={() => navigate("/")}
             style={{ flexGrow: 1, fontWeight: "900", cursor: "pointer", fontFamily: "Philosopher, sans-serif", fontSize:"3rem" }}
           >
-            <span style={{ color: "#D4AF37" }}>Flavor</span>Fusion
+            <span style={{ color: "#D4AF37" }}>Stock</span>Dashboard
           </p>
           <Box
             sx={{
@@ -94,9 +94,6 @@ const Navbar = () => {
           ></Box>
         </Toolbar>
       </AppBar>
-      {/* <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-        {drawer}
-      </Drawer> */}
     </Box>
   );
 };

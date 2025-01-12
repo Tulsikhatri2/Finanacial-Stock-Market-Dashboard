@@ -8,33 +8,28 @@ import {
     CircularProgress,
     CssBaseline,
     Drawer,
-    IconButton,
-    Toolbar,
     Typography,
     CardMedia,
   } from "@mui/material";
   import React, { useState, useEffect } from "react";
-  import MenuIcon from "@mui/icons-material/Menu";
   import { useTheme } from "@emotion/react";
   import axios from "axios";
   
   const News = () => {
-    const theme = useTheme();
     const [isClosing, setIsClosing] = useState(false);
     const [mobileOpen, setMobileOpen] = useState(false);
     const [newsData, setNewsData] = useState([]);
     const [loading, setLoading] = useState(true);
   
-    const apiKey = "DuVn_6L08EYOjtFHzOdpcINvzW6xikt7"; // Replace with your actual Polygon API key
+    const apiKey = "DuVn_6L08EYOjtFHzOdpcINvzW6xikt7"; 
   
-    // Fetching news data from Polygon API
     useEffect(() => {
       const fetchNewsData = async () => {
         try {
           const response = await axios.get(
             `https://api.polygon.io/v2/reference/news?apiKey=${apiKey}&limit=50`
           );
-          setNewsData(response.data.results); // Get the first 50 news articles
+          setNewsData(response.data.results); 
         } catch (error) {
           console.error("Error fetching news data", error);
         } finally {
@@ -44,11 +39,6 @@ import {
       fetchNewsData();
     }, [apiKey]);
   
-    const handleDrawerToggle = () => {
-      if (!isClosing) {
-        setMobileOpen(!mobileOpen);
-      }
-    };
   
     const handleDrawerClose = () => {
       setIsClosing(true);
@@ -65,46 +55,33 @@ import {
           display: "flex",
           backgroundColor: "#0c0a0a",
           width: "100%",
-          height: newsData.length === 0 ? "100vh" : "auto", // Conditional height based on newsData
+          height: newsData.length === 0 ? "100vh" : "auto", 
         }}
       >
         <CssBaseline />
         <AppBar
           position="fixed"
           sx={{
-            ml: {
-              width: "100%",
-              height: "6rem",
-              backgroundColor: "#0c0a0a",
-            },
+            backgroundColor: "#0c0a0a",
           }}
         >
-          <Toolbar>
             <Typography
               variant="h4"
               align="right"
               sx={{
-                width: "39.5%",
+                width: "100%",
                 color: "white",
+                marginTop:"3vh",
+                marginLeft:"10vw",
+                textAlign:"center",
                 fontFamily: "Philosopher, sans-serif",
+                textDecoration:"underline"
               }}
             >
               Financial News
             </Typography>
-  
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: "none" } }}
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
-          </Toolbar>
         </AppBar>
   
-        {/* Drawer Section */}
         <Box component="nav" aria-label="mailbox folders">
           <Drawer
             variant="temporary"
@@ -133,17 +110,16 @@ import {
           ></Drawer>
         </Box>
   
-        {/* Main Content Section */}
         <Box
           component="main"
           sx={{
             flexGrow: 1,
             width: "100%",
-            height: newsData.length === 0 ? "100vh" : "auto", // Adjust height based on newsData
+            height: newsData.length === 0 ? "100vh" : "auto", 
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: "6rem", // Adjusts for the fixed AppBar height
+            marginTop: "6rem", 
           }}
         >
           <Box
@@ -157,7 +133,6 @@ import {
               paddingInline: "3rem",
             }}
           >
-            {/* Check loading state */}
             {loading ? (
               <Box
                 sx={{
@@ -172,9 +147,9 @@ import {
               <Box
                 sx={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", // 4 cards per row for larger screens
+                  gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", 
                   gap: 2,
-                  marginTop: "2rem", // Add top margin to avoid overlap with navbar
+                  marginTop: "2rem", 
                 }}
               >
                 {newsData.map((news, index) => (
@@ -190,14 +165,13 @@ import {
                       padding: "1rem",
                     }}
                   >
-                    {/* Card Content */}
                     <CardMedia
                       component="img"
                       alt="News Image"
                       height="140"
                       image={
                         news.image_url || "https://via.placeholder.com/345x140"
-                      } // Fallback image URL
+                      } 
                     />
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">

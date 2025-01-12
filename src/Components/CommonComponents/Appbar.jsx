@@ -28,7 +28,6 @@ const Appbar = ({heading}) => {
           align="right"
           sx={{ width: "35%", color: "white" }}
         >
-          {/* USER UPDATE */}
           {heading}
         </Typography>
         <IconButton

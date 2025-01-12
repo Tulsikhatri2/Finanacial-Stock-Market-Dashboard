@@ -18,7 +18,6 @@ import Navbar from "../../Components/Navbar/Navbar";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 
-// Use Yup Validation On Register Form
 const validationSchema = yup.object({
   name: yup.string("Enter Your Name").required("Name is required"),
   email: yup
@@ -46,7 +45,6 @@ const RegisterPage = () => {
     letterSpacing: ".1rem",
   }));
 
-  // Formik Form In Material UI
   const formik = useFormik({
     initialValues: {
       name: "",

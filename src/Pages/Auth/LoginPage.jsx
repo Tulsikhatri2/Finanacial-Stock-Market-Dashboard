@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Box } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -14,10 +14,9 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import Navbar from "../../Components/Navbar/Navbar";
-import { GoogleLogin } from "@react-oauth/google";
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase";
-import { GoogleAuthProvider } from "firebase/auth/web-extension";
+import { FcGoogle } from "react-icons/fc";
 
 const validationSchema = yup.object({
   email: yup
@@ -45,7 +44,6 @@ const LoginPage = () => {
     letterSpacing: ".2rem",
   }));
 
-  // Formik Form In Material UI
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -61,29 +59,20 @@ const LoginPage = () => {
     },
   });
 
-  // Google Login
-  const handleSuccess = async (response) => {
+  const handleGoogleLogin = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+    try {
+      const result = await signInWithPopup(auth, provider);
+    } catch (error) {
+      console.error("Error during Google Sign-in:", error.message);
+    }
   };
 
-  const handleError = async () => {
-    alert("Error With Google Login");
-  };
-
-  // Forgot Password
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <>
       <Navbar />
-      <Box className="login-page">
+      <Box className="login-page" sx={{backgroundColor:"black"}}>
         <Box className="left-login"></Box>
         <Box className="right-login">
               <Card
@@ -110,10 +99,10 @@ const LoginPage = () => {
                         letterSpacing: 3,
                         color: "white",
                         fontSize: "2.5vh",
-                        fontWeight: "500"
+                        fontWeight: "bold"
                       }}
                     >
-                      Sign In
+                      Log In
                     </p>
 
                     <Box
@@ -244,9 +233,16 @@ const LoginPage = () => {
                     >
                       Login
                     </Button>
+                    <div style={{width:"2.5vw", height:"5vh", backgroundColor:"white",
+                      display:"flex", alignItems:"center", justifyContent:"center",
+                      borderRadius:"50%", cursor:"pointer"}}
+                      onClick={handleGoogleLogin}>
+                    <FcGoogle size={25}/>
+                    </div>
                   </CardActions>
+                 
                 </form>
-
+                
                 <Box
                   sx={{
                     width: "100%",
@@ -263,11 +259,7 @@ const LoginPage = () => {
                       Register
                     </Link>
                   </Typography>
-                  <Typography align="center" variant="h6">
-                    <Link to={""} className="link" onClick={handleClickOpen}>
-                      Forgot Password
-                    </Link>
-                  </Typography>
+                  
                 </Box>
               </Card>
         </Box>

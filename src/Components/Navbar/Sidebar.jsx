@@ -19,12 +19,9 @@ const drawerWidth = "30rem";
 
 const Sidebar = () => {
   const navigate = useNavigate();
-  // const { user } = useSelector((state) => state.auth);
-  // const token = localStorage.getItem("token")
   const [user] = useAuthState(auth);
 
   const logout = () => {
-    localStorage.clear();
     auth.signOut();
     navigate("/");
     window.location.reload();
@@ -54,7 +51,7 @@ const Sidebar = () => {
         textAlign={"center"}
         sx={{ marginTop: "3rem" }}
       >
-        <span style={{ color: "#D4AF37" }}>Flavor</span>Fusion
+        <span style={{ color: "#D4AF37" }}>Stock</span>Dashboard
       </Typography>
       <Divider sx={{ my: 2 }} />
       <Box sx={{ flex: 1 }}>

@@ -1,135 +1,184 @@
-import {
-  AppBar,
-  Box,
-  CssBaseline,
-  Drawer,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
 import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import { useTheme } from "@emotion/react";
+import { Card, CardContent, Typography, Grid, Box } from "@mui/material";
+import { Pie, Bar } from "react-chartjs-2";
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+} from "chart.js";
+
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
+
+const portfolioData = [
+    { name: "Apple Inc (AAPL)", holdings: 100, buyPrice: 150, currentPrice: 175 },
+    { name: "Google (GOOGL)", holdings: 50, buyPrice: 2500, currentPrice: 2700 },
+    { name: "Tesla (TSLA)", holdings: 30, buyPrice: 600, currentPrice: 750 },
+    { name: "Amazon (AMZN)", holdings: 20, buyPrice: 3200, currentPrice: 3400 },
+    { name: "Microsoft (MSFT)", holdings: 70, buyPrice: 290, currentPrice: 315 },
+    { name: "Meta Platforms (META)", holdings: 40, buyPrice: 250, currentPrice: 280 },
+];
+
+const calculateProfitLoss = (buyPrice, currentPrice, holdings) => {
+    return (currentPrice - buyPrice) * holdings;
+};
+
+const calculateAssets = (currentPrice, holdings) => {
+    return currentPrice * holdings;
+};
 
 const Portfolio = () => {
-  const theme = useTheme();
-  const [isClosing, setIsClosing] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+    const [data] = useState(portfolioData);
 
-  const handleDrawerToggle = () => {
-    if (!isClosing) {
-      setMobileOpen(!mobileOpen);
-    }
-  };
-  const handleDrawerClose = () => {
-    setIsClosing(true);
-    setMobileOpen(false);
-  };
-  const handleDrawerTransitionEnd = () => {
-    setIsClosing(false);
-  };
+    const totalProfitLoss = data.reduce((acc, stock) => {
+        return acc + calculateProfitLoss(stock.buyPrice, stock.currentPrice, stock.holdings);
+    }, 0);
 
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        backgroundColor: "#0c0a0a",
-        width: "100%",
-        height: "100vh",
-      }}
-    >
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        sx={{
-          ml: {
-            width: "100%",
-            height: "6rem",
-            backgroundColor: "#0c0a0a",
-          },
-        }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h4"
-            align="right"
-            sx={{
-              width: "39.5%",
-              color: "white",
-              fontFamily: "Philosopher, sans-serif",
-            }}
-          >
-            Portfolio
-          </Typography>
-
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
-          >
-            <MenuIcon fontSize="large" />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Box component="nav" aria-label="mailbox folders">
-        <Drawer
-          variant="temporary"
-          open={mobileOpen}
-          onTransitionEnd={handleDrawerTransitionEnd}
-          onClose={handleDrawerClose}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+    const pieChartData = {
+        labels: data.map((stock) => stock.name),
+        datasets: [
+            {
+                label: "Profit/Loss",
+                data: data.map((stock) =>
+                    calculateProfitLoss(stock.buyPrice, stock.currentPrice, stock.holdings)
+                ),
+                backgroundColor: ["#82ca9d", "#8884d8", "#ff7300", "#d45087", "#ff6347", "#2ca02c"],
+                borderWidth: 1,
             },
-          }}
-        ></Drawer>
-        <Drawer
-          variant="permanent"
-          sx={{
-            display: { xs: "none", sm: "block" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
+        ],
+    };
+
+    const barChartData = {
+        labels: data.map((stock) => stock.name),
+        datasets: [
+            {
+                label: "Assets",
+                data: data.map((stock) => calculateAssets(stock.currentPrice, stock.holdings)),
+                backgroundColor: "#8884d8",
+                borderWidth: 1,
             },
-          }}
-          open
-        ></Drawer>
-      </Box>
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          borderLeft: "none",
-          boxShadow: "none",
-        }}
-      >
-        <Box
-          sx={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Box sx={{ width: "100%", height: "100%", paddingInline: "3rem" }}>
-            {/* <CategoryListData /> */}
-          </Box>
+        ],
+    };
+
+    return (
+        <Box sx={{ padding: "20px", backgroundColor: "black", height: "auto" }}>
+            <Typography variant="h4" align="center" gutterBottom sx={{ color: "white", fontFamily: "Philosopher, sans-serif", textDecoration:"underline" }}>
+                Investor-A Asset Portfolio Overview
+            </Typography>
+
+            <Box mt={5} display="flex" justifyContent="space-around" alignItems="center">
+                <Box
+                    sx={{
+                        width: "45%",
+                        height: "400px",
+                        backgroundColor: "white",
+                        padding: 3,
+                        borderRadius: 2,
+                        boxShadow: "0px 0px 1.5vh gray",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Typography variant="h6" gutterBottom sx={{ fontFamily: "Philosopher, sans-serif", }}>
+                        Profit/Loss Distribution
+                    </Typography>
+                    <Pie
+                        data={pieChartData}
+                        options={{
+                            responsive: true,
+                            plugins: {
+                                legend: { position: "top" },
+                            },
+                            maintainAspectRatio: false,
+                        }}
+                    />
+                </Box>
+
+                <Box
+                    sx={{
+
+                        width: "45%",
+                        height: "400px",
+                        backgroundColor: "white",
+                        padding: 3,
+                        borderRadius: 2,
+                        boxShadow: "0px 0px 1.5vh gray",
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <Typography variant="h6" gutterBottom sx={{ fontFamily: "Philosopher, sans-serif", }}>
+                        Asset Distribution
+                    </Typography>
+                    <Bar
+                        data={barChartData}
+                        options={{
+                            responsive: true,
+                            plugins: {
+                                legend: { position: "top" },
+                            },
+                            maintainAspectRatio: false,
+                            scales: {
+                                x: { beginAtZero: true },
+                                y: { beginAtZero: true },
+                            },
+                        }}
+                    />
+                </Box>
+            </Box>
+
+            <Grid container spacing={3} sx={{marginTop:"5vh"}}>
+                {data.map((stock, index) => (
+                    <Grid item xs={12} sm={4} key={index} sx={{
+
+                    }}>
+                        <Card sx={{ boxShadow: "0px 0px 1.5vh gray" }}>
+                            <CardContent>
+                                <Typography variant="h5" sx={{ fontWeight: "bold", fontFamily: "Philosopher, sans-serif" }}>{stock.name}</Typography>
+                                <Typography sx={{ fontFamily: "Philosopher, sans-serif", fontSize:"1.7vh"}}>Holdings: {stock.holdings}</Typography>
+                                <Typography sx={{ fontFamily: "Philosopher, sans-serif", fontSize:"1.7vh"}}>
+                                    Buy Price: ₹{stock.buyPrice} | Current Price: ₹{stock.currentPrice}
+                                </Typography>
+                                <Typography sx={{ fontFamily: "Philosopher, sans-serif",fontSize:"1.7vh" }}>
+                                    Profit/Loss: ₹
+                                    {calculateProfitLoss(stock.buyPrice, stock.currentPrice, stock.holdings)}
+                                </Typography>
+                                <Typography sx={{ fontFamily: "Philosopher, sans-serif",fontSize:"1.7vh" }}>
+                                    Assets: ₹{calculateAssets(stock.currentPrice, stock.holdings)}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+
+            <Box mt={4} textAlign="center">
+                <Typography
+                    variant="h5"
+                    sx={{
+                        color: "black",
+                        fontWeight: "bold",
+                        padding: 2,
+                        backgroundColor: "white",
+                        display: "inline-block",
+                        borderRadius: 2,
+                        boxShadow: 2,
+                        fontFamily: "Philosopher, sans-serif",
+                    }}
+                >
+                    Total Profit/Loss: ₹{totalProfitLoss}
+                </Typography>
+            </Box>
         </Box>
-      </Box>
-    </Box>
-  );
+    );
 };
 
 export default Portfolio;
